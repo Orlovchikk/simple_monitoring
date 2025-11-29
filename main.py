@@ -57,7 +57,9 @@ if __name__ == "__main__":
                     logging.info("Restart command success")
                 else:
                     logging.error(f"Restart failed. stderr: {restart_process.stderr}")
-                time.sleep(config.CHECK_INTERVAL)
+
+                # Ожидание, пока приложение запустится
+                time.sleep(config.RESTART_COMMAND)
 
             # Обработка ошибок, если веб-приложение не перезапускается
             except subprocess.TimeoutExpired:
@@ -66,5 +68,3 @@ if __name__ == "__main__":
             except Exception as e:
                 # Все остальные ошибки, которые могли произойти при перезапуске веб-приложения
                 logging.error(f"Failed to run restart command: {e}")
-
-            time.sleep(config.CHECK_INTERVAL)

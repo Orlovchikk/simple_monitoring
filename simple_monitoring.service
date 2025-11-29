@@ -1,11 +1,17 @@
 [Unit]
+# Описание сервиса
 Description=Simple Monitoring Service
 
 [Service]
+# Определение рабочей директории, из которой должно запускатся приложение и где хранятся все файлы
 WorkingDirectory=/opt/simple_monitoring
+# Команда для запуска сервиса
 ExecStart={{VENV_PATH}} /opt/simple_monitoring/main.py
+# Определение типа перезапуска сервиса: on-failure - перезапуск при падении сервиса
 Restart=on-failure
+# Обозначение типа сервиса: simple - systemd запускает сервис и сразу же помечает его как работающий
 Type=simple
 
 [Install]
+# Запуск сервиса после основного запуска системы, когда все основные сервисы уже раотают
 WantedBy=multi-user.target

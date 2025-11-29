@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 
 
+# Валидация конфигурационного файла и импорт всех переменных из .env
 class AppConfig(BaseSettings):
     APP_URL: str
     CHECK_INTERVAL: int
