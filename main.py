@@ -8,10 +8,9 @@ from config import AppConfig
 
 config = AppConfig()
 
-# Настройка формата логирования
+# Настройка формата логирования и записи в файл "monitoring.log"
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    level=logging.INFO, format="%(levelname)s - %(message)s", stream=sys.stdout
 )
 
 if __name__ == "__main__":
@@ -20,6 +19,9 @@ if __name__ == "__main__":
     # Бесконечный цикл проверки доступности веб-приложения
     while True:
         try:
+            # Ожидание N секунд для проверки веб-приложения
+            time.sleep(config.CHECK_INTERVAL)
+
             # Посылание запроса в веб-приложение
             result = requests.get(config.APP_URL, timeout=config.TIMEOUT)
 
@@ -32,9 +34,6 @@ if __name__ == "__main__":
                 raise Exception(
                     f"Service responded with status code: {result.status_code}"
                 )
-
-            # Ожидание следующих N секунд для проверки веб-приложения
-            time.sleep(config.CHECK_INTERVAL)
 
         # Обработка ошибок, если веб-приложение не отвечает со статусом 200
         except Exception as e:
@@ -58,6 +57,7 @@ if __name__ == "__main__":
                     logging.info("Restart command success")
                 else:
                     logging.error(f"Restart failed. stderr: {restart_process.stderr}")
+                time.sleep(config.CHECK_INTERVAL)
 
             # Обработка ошибок, если веб-приложение не перезапускается
             except subprocess.TimeoutExpired:

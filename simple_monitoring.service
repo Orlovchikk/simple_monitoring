@@ -1,0 +1,11 @@
+[Unit]
+Description=Simple Monitoring Service
+
+[Service]
+WorkingDirectory=/opt/simple_monitoring
+ExecStart={{VENV_PATH}} /opt/simple_monitoring/main.py
+Restart=on-failure
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

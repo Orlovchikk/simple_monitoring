@@ -1,0 +1,11 @@
+[Unit]
+Description=Test server for simple monitoring service
+
+[Service]
+WorkingDirectory=/opt/simple_monitoring
+ExecStart={{VENV_PATH}} /opt/simple_monitoring/simple_server.py
+Restart=on-failure
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
